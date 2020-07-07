@@ -1,0 +1,544 @@
+## Python MongoDB（安装Python操作MongoDB数据库的库）
+```
+Python can be used in database applications.(python也能使用数据库程序)
+One of the most popular NoSQL database is MongoDB.(Nosql中比较优秀的就是MongoDB)
+
+MongoDB stores data in JSON-like documents, which makes the database very flexible and scalable.
+(MongoDB 以JSON类型的文档进行数据存储，这种方式存储数据更加灵活。)
+You can download a free MongoDB database at https://www.mongodb.com.
+(可以从网站****免费下载MongoDB数据库)
+Or get started right away with a MongoDB cloud service at https://www.mongodb.com/cloud/atlas.
+(或者使用云端共享数据库)
+
+Python needs a MongoDB driver to access the MongoDB database.
+In this tutorial we will use the MongoDB driver "PyMongo".
+We recommend that you use PIP to install "PyMongo".
+PIP is most likely already installed in your Python environment.
+```
+- 安装pymongo 用于python操作MongoDB数据库
+```python
+python -m pip install pymongo
+```
+- 测试pymongo是否安装成功
+```
+import pymongo
+```
+
+
+## Python MongoDB Create Database（创建数据库）
+"""
+To create a database in MongoDB, start by creating a MongoClient object, then specify a connection URL with the correct ip address and the name of the database you want to create.
+MongoDB will create the database if it does not exist, and make a connection to it.
+"""
+- 创建一个名为：mydatabase的数据库
+```python
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+
+mydb = myclient['mydatabase']
+```
+- Example
+- Return a list of your system's databases:
+```python
+print(myclient.list_database_names())
+```
+- Check if "mydatabase" exists:
+```python
+dblist = myclient.list_database_names()
+if "mydatabase" in dblist:
+	print("The database exists.")
+```
+
+
+## Python MongoDB Create Collection
+> (A collection in MongoDB is the same as a table in SQL databases.)
+
+> To create a collection in MongoDB, use database object and specify the name of the collection you want to create.
+
+MongoDB will create the collection if it does not exist.
+```python
+Create a collection called "customers":
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+
+mycol = mydb["customers"]
+```
+
+**Important: In MongoDB, a collection is not created until it gets content!**
+> MongoDB waits until you have inserted a document before it actually creates the collection.
+
+> Check if Collection Exists
+> Remember: In MongoDB, a collection is not created until it gets content, so if this is your first time creating a collection, you should complete the next chapter (create document) before you check if the collection exists!
+
+- Return a list of all collections in your database:
+```python
+print(mydb.list_collection_names())
+```
+
+- Check if the "customers" collection exists:
+```python
+collist = mydb.list_collection_names()
+if "customers" in collist:
+	print("The collection exists.")
+```
+
+
+## Python MongoDB Insert Document
+> A document in MongoDB is the same as a **record** in SQL databases.
+
+- Insert Into Collection
+
+> To insert a record, or document as it is called in MongoDB, into a collection, we use the **insert_one()** method.
+> The first parameter of the insert_one() method is a dictionary containing the name(s) and value(s) of each field in the document you want to insert.
+
+- Insert a record in the "customers" collection:
+```python
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+mydict = { "name": "John", "address": "Highway 37" }
+
+x =  mycol.insert_one(mydict)
+```
+
+```
+Return the _id Field
+
+The insert_one() method returns a InsertOneResult object, which has a property, inserted_id, that holds the id of the inserted document.
+```
+```
+Insert another record in the "customers" collection, and return the value of the _id field:
+
+mydict = { "name": "Peter", "address": "Lowstreet 27" }
+x = mycol.insert_one(mydict)
+print(x.inserted_id) 
+```
+
+- Insert Multiple Documents
+
+> To insert multiple documents into a collection in MongoDB, we use the **insert_many()** method.
+
+> The first parameter of the insert_many() method is a list containing dictionaries with the data you want to insert:
+
+```python
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+mylist = [
+  { "name": "Amy", "address": "Apple st 652"},
+  { "name": "Hannah", "address": "Mountain 21"},
+  { "name":  "Michael", "address": "Valley 345"},
+  { "name": "Sandy", "address":  "Ocean blvd 2"},
+  { "name": "Betty", "address": "Green Grass 1"},
+  { "name": "Richard", "address": "Sky st 331"},
+  { "name": "Susan",  "address": "One way 98"},
+  { "name": "Vicky", "address": "YellowGarden 2"},
+  { "name": "Ben", "address": "Park Lane 38"},
+  { "name": "William", "address": "Central st 954"},
+  { "name":  "Chuck", "address": "Main Road 989"},
+  { "name": "Viola",  "address": "Sideway 1633"}
+]
+
+x = mycol.insert_many(mylist)
+
+#print list of the _id values of the inserteddocuments:
+print(x.inserted_ids) 
+```
+> The insert_many() method returns a InsertManyResult object, which has a property, inserted_ids, that holds the ids of the inserted documents.
+
+- Insert Multiple Documents, with Specified IDs
+```
+If you do not want MongoDB to assign unique ids for you document, you can specify the _id field when you insert the document(s).
+
+Remember that the values has to be unique. Two documents cannot have the same _id.
+```
+```python
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mylist = [
+  { "_id": 1, "name": "John", "address": "Highway 37"},
+  { "_id": 2, "name": "Peter", "address": "Lowstreet 27"},
+  { "_id":  3, "name": "Amy", "address": "Apple st 652"},
+  { "_id": 4, "name":  "Hannah", "address": "Mountain 21"},
+  { "_id": 5, "name":  "Michael", "address": "Valley 345"},
+  { "_id": 6, "name": "Sandy",  "address": "Ocean blvd 2"},
+  { "_id": 7, "name": "Betty",  "address": "Green Grass 1"},
+  { "_id": 8, "name": "Richard",  "address": "Sky st 331"},
+  { "_id": 9, "name": "Susan", "address":  "One way 98"},
+  { "_id": 10, "name": "Vicky", "address": "YellowGarden 2"},
+  { "_id": 11, "name": "Ben", "address": "Park Lane38"},
+  { "_id": 12, "name": "William", "address": "Central st954"},
+  { "_id": 13, "name": "Chuck", "address": "Main Road 989"},
+  { "_id": 14, "name": "Viola", "address": "Sideway 1633"}
+]
+
+x = mycol.insert_many(mylist)
+
+#print list of the _id values of the inserteddocuments:
+print(x.inserted_ids) 
+```
+
+
+## Python MongoDB Find
+
+> In MongoDB we user the **find** and **findOne** to find data in a collection.
+> Just like the **select** statement in used to find data in a table in a MySQL database.
+
+- Find one
+> To select data from a collection in MongoDB,we can use the find_one() method.
+> The find_one() method returns the first occurrence in the selection.
+
+- Find the first document in the customers collection.
+```python
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+x = mycol.find_one()
+
+print(x)
+```
+
+-Find All
+> To select data from a table in MongoDB,we can also use the find() method.
+> The find() method returns all occurrences in the selection.
+> The first parameter of the find() method is a query object.In this example we use an empty query object,which selects all documents in the collection.
+**No parameters in the find() method gives you the same result as select * in MySQL.**
+
+- Return all documents in the "customers" collection, and print each document.
+```python
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+for x in mycol.find():
+	print(x)
+```
+
+- Return Only Some Fields
+> The second parameter of the find() method is an object describing which fields to include in the result.
+> This parameters is optional,and if omitted,all fields will be included in the result.
+
+```pyhon
+Return only the names and addresses,not the _ids:
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+for x in mycol.find({}, {"_id": 0,"name": 1, "address": 1}):
+	print(x)
+```
+
+**You are not allowed to specify both 0 and 1 values in the same object (except if one of the fields is the ``_id`` field). If you specify a field with the value 0, all other fields get the value 1, and vice versa: (如果您指定值为0的字段，则所有其他字段的值为1，反之亦然：)**
+
+```
+This example will exclude "address" from the result:
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+for x in mycol.find({}, {"address": 0}):
+	print(x)
+```
+
+### Wrong Example
+```
+You get an error if you specify both 0 and 1 values in the same object (except if one of the fields is the _id field):
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+for x in mycol.find({},{ "name": 1, "address": 0 }):
+	print(x) 
+```
+
+
+## Python MongoDB Query
+- Filter the Result
+> When finding documents in a collection, you can filter the result by using a query object.
+> The first argument of the find() method is a query object, and is used to limit the search.
+```python
+Find document(s) with the address "Park Lane 38":
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": "Park Lane 38" }
+ 
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+	print(x) 
+```
+- Advanced Query
+> To make advanced queries you can use modifiers as values in the query object.
+> E.g. to find the documents where the "address" field starts with the letter "S" or higher (alphabetically), use the greater than modifier: {"$gt": "S"}:
+```python
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": { "$gt": "S" } }
+
+mydoc = mycol.find(myquery)
+ 
+for x in mydoc:
+	print(x) 
+```
+
+- Filter With Regular Expressions
+> You can also use regular expressions as a modifier.
+**Regular expressions can only be used to query strings.**
+> To find only the documents where the "address" field starts with the letter "S", use the regular expression {"$regex": "^S"}:
+```
+Find documents where the address starts with the letter "S":
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": { "$regex": "^S" } }
+
+mydoc = mycol.find(myquery)
+ 
+for x in mydoc:
+	print(x) 
+```
+
+
+## Python MongoDB Sort
+- Sort the Result
+
+> Use the sort() method to sort the result in ascending or descending order.
+> The sort() method takes one parameter for "fieldname" and one parameter for "direction" (ascending is the default direction).
+```python
+Sort the result alphabetically by name:
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+mydoc = mycol.find().sort("name")
+
+for x in mydoc:
+	print(x) 
+```
+
+-Sort Descending
+Use the value -1 as the second parameter to sort descending.
+**sort("name", 1) #ascending (升序)
+sort("name", -1) #descending(降序)**
+
+```python
+Sort the result reverse alphabetically by name:
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+mydoc = mycol.find().sort("name", -1)
+
+for x in mydoc:
+  print(x) 
+```
+
+
+## Python MongoDB Delete Document
+- Delete Document
+
+> To delete one document, we use the delete_one() method.
+> The first parameter of the delete_one() method is a query object defining which document to delete.
+**Note: If the query finds more than one document, only the first occurrence is deleted.**
+```
+Delete the document with the address "Mountain 21":
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": "Mountain 21" }
+ 
+mycol.delete_one(myquery)
+```
+
+- Delete Many Documents
+
+> To delete more than one document, use the delete_many() method.
+> The first parameter of the delete_many() method is a query object defining which documents to delete.
+```
+Delete all documents were the address starts with the letter S:
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": {"$regex": "^S"} }
+ 
+x = mycol.delete_many(myquery)
+
+print(x.deleted_count, " documentsdeleted.") 
+```
+
+- Delete All Documents in a Collection
+
+> To delete all documents in a collection, pass an empty query object to the delete_many() method:
+```
+Delete all documents in the "customers" collection:
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+x = mycol.delete_many({})
+
+print(x.deleted_count, " documentsdeleted.") 
+```
+
+
+## Python MongoDB Drop Collection
+- Delete Collection
+
+> You can delete a table, or collection as it is called in MongoDB, by using the drop() method.
+```
+Delete the "customers" collection:
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+mycol.drop() 
+```
+> The drop() method returns true if the collection was dropped successfully, and false if the collection does not exist.
+
+
+## Python MongoDB Update
+- Update Collection
+
+> You can update a record, or document as it is called in MongoDB, by using the update_one() method.
+> The first parameter of the update_one() method is a query object defining which document to update.
+**Note: If the query finds more than one record, only the first occurrence is updated.**
+> The second parameter is an object defining the new values of the document.
+```python
+Change the address from "Valley 345" to "Canyon 123":
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": "Valley 345" } # 检索条件对象
+newvalues = { "$set": {  "address": "Canyon 123" } }  # 赋值语句
+ 
+mycol.update_one(myquery, newvalues)
+
+#print "customers" after the update:
+for x in mycol.find():
+	print(x) 
+```
+
+- Update Many
+
+> To update all documents that meets the criteria of the query, use the update_many() method.
+```python
+Update all documents where the address starts with the letter "S":
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myquery = { "address": { "$regex": "^S" } }
+newvalues = { "$set": {  "name": "Minnie" } }
+ 
+x = mycol.update_many(myquery, newvalues)
+
+print(x.modified_count, "documents updated.") 
+```
+
+
+## Python MongoDB Limit
+- Limit the Result
+
+> To limit the result in MongoDB, we use the limit() method.
+> The limit() method takes one parameter, a number defining how many documents to return.
+> Consider you have a "customers" collection:
+
+```
+Customers
+
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
+{'_id': 4, 'name': 'Hannah', 'address': 'Mountain 21'}
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
+{'_id': 6, 'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'_id': 7, 'name': 'Betty', 'address': 'Green Grass 1'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 9, 'name': 'Susan', 'address': 'One way 98'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
+{'_id': 12, 'name': 'William', 'address': 'Central st 954'}
+{'_id': 13, 'name': 'Chuck', 'address': 'Main Road 989'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'} 
+```
+```python
+Limit the result to only return 5 documents:
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+ 
+myresult = mycol.find().limit(5)
+
+#print the result:
+for x in myresult:
+	print(x)
+```
