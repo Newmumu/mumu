@@ -1065,34 +1065,60 @@ for x in myiter:
 
 ### Python Modules
 
-> 
+> Use a module
 ```python
+import mymodule
+mymodule.greeting('Jonathan')
 
+Hello, Jonathan
 ```
 
-> 
+> Variables in module
 ```python
+import mymodule
 
+a = mymodule.person1["age"]
+print(a)
+
+36
 ```
 
-> 
+> Re-naming a module
 ```python
+import mymodule as mx
 
+a = mx.person1["age"]
+print(a)
+
+36
 ```
 
-> 
+> Built-in modules
 ```python
+import platform
 
+x = platform.system()
+print(x)
+
+Windows
 ```
 
-> 
+> Using the dir() function
 ```python
+import platform
 
+x = dir(platform)
+print(x)
+
+['DEV_NULL', '_UNIXCONFDIR', 'WIN32_CLIENT_RELEASES', 'WIN32_SERVER_RELEASES', '__builtins__', '__cached__', '__copyright__', '__doc__', '__file__', '__loader__', '__name__', '__package __', '__spec__', '__version__', '_default_architecture', '_dist_try_harder', '_follow_symlinks', '_ironpython26_sys_version_parser', '_ironpython_sys_version_parser', '_java_getprop', '_libc_search', '_linux_distribution', '_lsb_release_version', '_mac_ver_xml', '_node', '_norm_version', '_perse_release_file', '_platform', '_platform_cache', '_pypy_sys_version_parser', '_release_filename', '_release_version', '_supported_dists', '_sys_version', '_sys_version_cache', '_sys_version_parser', '_syscmd_file', '_syscmd_uname', '_syscmd_ver', '_uname_cache', '_ver_output', 'architecture', 'collections', 'dist', 'java_ver', 'libc_ver', 'linux_distribution', 'mac_ver', 'machine', 'node', 'os', 'platform', 'popen', 'processor', 'python_branch', 'python_build', 'python_compiler', 'python_implementation', 'python_revision', 'python_version', 'python_version_tuple', 're', 'release', 'subprocess', 'sys', 'system', 'system_aliases', 'uname', 'uname_result', 'version', 'warnings', 'win32_ver']
 ```
 
-> 
+> Import from module
 ```python
+from mymodule import person1
+print(person1["age"])
 
+36
 ```
 
 
@@ -1100,24 +1126,44 @@ for x in myiter:
 ### Python Dates
 
 
-> 
+> Import the datetime module and display the current date
 ```python
+import datetime
+x = datetime.datetime.now()
+print(x)
 
+2020-07-09 10:49:32.116713
 ```
 
-> 
+> Return the year and name of weekday
 ```python
+import datetime
 
+x = datetime.datetime.now()
+
+print(x.year)
+print(x.strftime("%A"))
+
+2020
+Thursday
 ```
 
-> 
+> Create a date object
 ```python
+import datetime
+x = datetime.datetime(2020, 5, 17)
+print(x)
 
+2020-05-17 00:00:00
 ```
 
-> 
+> The strftime() Method
 ```python
+import datetime
+x = datetime.datetime(2018, 6, 1)
+print(x.strftime("%B"))
 
+June
 ```
 
 
@@ -1125,139 +1171,442 @@ for x in myiter:
 ### Python Math
 
 
-> 
+> Find the lowest and highest value in an iterable
 ```python
+x = min(5, 10, 25)
+y = max(5, 10, 25)
 
+print(x)
+print(y)
+
+50
+25
 ```
 
-> 
+> Return the absolute value of a number
 ```python
+x = abs(-7.25)
+print(x)
 
+7.25
 ```
 
-> 
+> Return the value of x to the power of y (x^y)
 ```python
+x = pow(4, 3)
+print(x)
 
+64
 ```
 
-> 
+> Return the square root of a number
 ```python
+import math
+x = math.sqrt(64)
+print(x)
 
+8.0
 ```
 
-> 
+> Round a number upwards and downwards to its nearest integer
 ```python
+#Import math library
+import math
 
+#Round a number upward to its nearest integer
+x = math.ceil(1.4)
+
+#Round a number downward to its nearest integer
+y = math.floor(1.4)
+
+print(x)
+print(y)
+
+
+2
+1
 ```
 
-> 
+> Return the value of PI
 ```python
+import math
+x = math.pi
+print(x)
 
+3.141592653589793
 ```
 
 
 
 ### Python JSON
 
+> Convert from Json to Python
+```python loads
+import json
 
-> 
-```python
+# some JSON:
+x = '{ "name":"John", "age":30, "city":"New York"}'
 
+# parse x:
+y = json.loads(x)
+
+# the result is a Python dictionary:
+print(y["age"])
+
+
+30
 ```
 
-> 
+> Convert from Python to Json
 ```python
+import json
 
+# a Python object (dict):
+x = {
+  "name": "John",
+  "age": 30,
+  "city": "New York"
+}
+
+# convert into JSON:
+y = json.dumps(x)
+
+# the result is a JSON string:
+print(y)
+
+{"name": "John", "age": 30, "city": "New York"}
 ```
 
-> 
+> Convert Python objects into Json strings
 ```python
+import json
 
+print(json.dumps({"name": "John", "age": 30}))
+print(json.dumps(["apple", "bananas"]))
+print(json.dumps(("apple", "bananas")))
+print(json.dumps("hello"))
+print(json.dumps(42))
+print(json.dumps(31.76))
+print(json.dumps(True))
+print(json.dumps(False))
+print(json.dumps(None))
+
+
+{"name": "John", "age": 30}
+["apple", "bananas"]
+["apple", "bananas"]
+"hello"
+42
+31.76
+true
+false
+null
 ```
 
-> 
+> Convert a Python object containing all the legal data types
 ```python
+import json
 
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True,
+  "divorced": False,
+  "children": ("Ann","Billy"),
+  "pets": None,
+  "cars": [
+    {"model": "BMW 230", "mpg": 27.5},
+    {"model": "Ford Edge", "mpg": 24.1}
+  ]
+}
+
+# convert into JSON:
+y = json.dumps(x)
+
+# the result is a JSON string:
+print(y)
+
+{"name": "John", "age": 30, "married": true, "divorced": false, "children": ["Ann","Billy"], "pets": null, "cars": [{"model": "BMW 230", "mpg": 27.5}, {"model": "Ford Edge", "mpg": 24.1}]}
 ```
 
-> 
+> Use the indent parameter to define the numbers of indents
 ```python
+import json
 
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True,
+  "divorced": False,
+  "children": ("Ann","Billy"),
+  "pets": None,
+  "cars": [
+    {"model": "BMW 230", "mpg": 27.5},
+    {"model": "Ford Edge", "mpg": 24.1}
+  ]
+}
+
+# use four indents to make it easier to read the result:
+print(json.dumps(x, indent=4))
+
+
+{
+    "name": "John",
+    "age": 30,
+    "married": true,
+    "divorced": false,
+    "children": [
+        "Ann",
+        "Billy"
+    ],
+    "pets": null,
+    "cars": [
+        {
+            "model": "BMW 230",
+            "mpg": 27.5
+        },
+        {
+            "model": "Ford Edge",
+            "mpg": 24.1
+        }
+    ]
+}
 ```
 
-> 
+> Use the separators parameter to change the default separator
 ```python
+import json
 
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True,
+  "divorced": False,
+  "children": ("Ann","Billy"),
+  "pets": None,
+  "cars": [
+    {"model": "BMW 230", "mpg": 27.5},
+    {"model": "Ford Edge", "mpg": 24.1}
+  ]
+}
+
+# use . and a space to separate objects, and a space, a = and a space to separate keys from their values:
+print(json.dumps(x, indent=4, separators=(". ", " = ")))
+
+{
+    "name" = "John".
+    "age" = 30.
+    "married" = true.
+    "divorced" = false.
+    "children" = [
+        "Ann".
+        "Billy"
+    ],
+    "pets" = null.
+    "cars" = [
+        {
+            "model" = "BMW 230".
+            "mpg" = 27.5
+        }.
+        {
+            "model" = "Ford Edge".
+            "mpg" = 24.1
+        }
+    ]
+}
 ```
 
-> 
+> Use the sort_keys parameter to specify if the result should be sorted or not
 ```python
+import json
 
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True,
+  "divorced": False,
+  "children": ("Ann","Billy"),
+  "pets": None,
+  "cars": [
+    {"model": "BMW 230", "mpg": 27.5},
+    {"model": "Ford Edge", "mpg": 24.1}
+  ]
+}
+
+# sort the result alphabetically by keys:
+print(json.dumps(x, indent=4, sort_keys=True))
+
+{
+    "age": 30,
+    "cars": [
+        {
+            "model": "BMW 230",
+            "mpg": 27.5
+        },
+        {
+            "model": "Ford Edge",
+            "mpg": 24.1
+        }
+    ],
+    "children": [
+        "Ann",
+        "Billy"
+    ],
+    "divorced": false,
+    "married": true,
+    "name": "John",
+    "pets": null
+}
 ```
 
 
 
 ### Python RegEx
 
-
-> 
+> Search a string to see if it starts with "The" and ends with "Spain"
 ```python
+import re
 
+#Check if the string starts with "The" and ends with "Spain":
+
+txt = "The rain in Spain"
+x = re.search("^The.*Spain$", txt)
+
+if x:
+  print("YES! We have a match!")
+else:
+  print("No match")
+
+YES! We have a match!
 ```
 
-> 
+> Using the findall() function
 ```python
+import re
 
+#Return a list containing every occurrence of "ai":
+
+txt = "The rain in Spain"
+x = re.findall("ai", txt)
+print(x)
+
+['ai', 'ai']
 ```
 
-> 
+> Using the search() function
 ```python
+import re
+txt = "The rain in Spain"
+x = re.search("\s", txt)
+print("The first white-space character is located in position:", x.start()) 
 
+The first white-space character is located in position: 3
 ```
 
-> 
+> Using the split() function
 ```python
+import re
 
+#Split the string at every white-space character:
+
+txt = "The rain in Spain"
+x = re.split("\s", txt)
+print(x)
+
+['The', 'rain', 'in', 'Spain']
 ```
 
-> 
+> Using the sub() function
 ```python
+import re
 
+#Replace all white-space characters with the digit "9":
+
+txt = "The rain in Spain"
+x = re.sub("\s", "9", txt)
+print(x)
+
+The9rain9in9Spain
 ```
 
 
 
 ### Python PIP
 
-
-> 
+> Using a package
 ```python
+import camelcase
 
+c = camelcase.CamelCase()
+
+txt = "lorem ipsum dolor sit amet"
+
+print(c.hump(txt))
+
+#This method capitalizes the first letter of each word.
+
+
+Lorem Ipsum Dolor Sit Amet
 ```
 
 
 
 ### Python Try Except
 
-
-> 
+> When an error occurs,print a message
 ```python
+#The try block will generate an error, because x is not defined:
 
+try:
+  print(x)
+except:
+  print("An exception occurred")
+
+An exception occurred
 ```
 
-> 
+> Many exceptions
 ```python
+#The try block will generate a NameError, because x is not defined:
 
+try:
+  print(x)
+except NameError:
+  print("Variable x is not defined")
+except:
+  print("Something else went wrong")
+
+Variable x is not defined
 ```
 
-> 
+> Use the else keyword to define a block of code to be executed if no errors were raised
 ```python
+#The try block does not raise any errors, so the else block is executed:
 
+try:
+  print("Hello")
+except:
+  print("Something went wrong")
+else:
+  print("Nothing went wrong")
+
+Hello
+Nothing went wrong
 ```
 
-> 
+> Use the finally block to execute code regardless if the try block raises an error or not
 ```python
+#The finally block gets executed no matter if the try block raises any errors or not:
 
+try:
+  print(x)
+except:
+  print("Something went wrong")
+finally:
+  print("The 'try except' is finished")
+
+Something went wrong
+The 'try except' is finished
 ```
 
 
@@ -1265,300 +1614,1281 @@ for x in myiter:
 ### Python Files
 
 
-> 
+> Read a file
 ```python
+f = open("demofile.txt", "r")
+print(f.read())
 
+Hello! Welcome to demofile.txt
+This file is for testing purposes.
+Good Luck!
 ```
 
-> 
+> Read only parts of file
 ```python
+f = open("demofile.txt", "r")
+print(f.read(5))
 
+Hello
 ```
 
-> 
+> Read one line of file
 ```python
+f = open("demofile.txt", "r")
+print(f.readline())
 
+Hello! Welcome to demofile.txt
 ```
 
-> 
+> Loop through the lines of a file to read the whole file,line by line
 ```python
+f = open("demofile.txt", "r")
+for x in f:
+  print(x)
 
+
+Hello! Welcome to demofile.txt
+This file is for testing purposes.
+Good Luck!
 ```
 
 
 
 ### Python MySQL
 
-> 
+> Create a connection to a database
 ```python
+import mysql.connector
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword"
+)
+print(mydb)
+
+<mysql.connector.connection.MySQLConnection object ar 0x016645F0>
+```
+
+> Create a database in MySQL
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("CREATE DATABASE mydatabase")
+
+#If this page is executed with no error, you have successfully created a database.
+```
+
+> Check if a database exist
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SHOW DATABASES")
+
+for x in mycursor:
+  print(x)
+
+
+('information_scheme',)
+('mydatabase',)
+('performance_schema',)
+('sys',)
+```
+
+> Create a table 
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))")
+
+#If this page is executed with no error, you have successfully created a table named "customers".
+```
+
+> Check if a table exist
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SHOW TABLES")
+
+for x in mycursor:
+     print(x)
+
+
+('customers',)
+```
+
+> Create primary key when creating a table
+```python # 在创建表的时候，某一个字段后添加属性 Primary key
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="yourusername",
+  password="yourpassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("CREATE TABLE customers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))")
+
+#If this page is executed with no error, the table "customers" now has a primary key
+```
+
+> Insert a record in a table 
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = ("John", "Highway 21")
+
+mycursor.execute(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record inserted.")
+
+
+1 record inserted.
+```
+
+> Insert multiple rows
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = [
+ ('Peter', 'Lowstreet 4'),
+ ('Amy', 'Apple st 652'),
+ ('Hannah', 'Mountain 21'),
+ ('Michael', 'Valley 345'),
+ ('Sandy', 'Ocean blvd 2'),
+ ('Betty', 'Green Grass 1'),
+ ('Richard', 'Sky st 331'),
+ ('Susan', 'One way 98'),
+ ('Vicky', 'Yellow Garden 2'),
+ ('Ben', 'Park Lane 38'),
+ ('William', 'Central st 954'),
+ ('Chuck', 'Main Road 989'),
+ ('Viola', 'Sideway 1633')
+]
+
+mycursor.executemany(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record was inserted.")
+
+
+13 record was inserted.
+```
+
+> Get inserted ID
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = ("Michelle", "Blue Village")
+mycursor.execute(sql, val)
+
+mydb.commit()
+
+print("1 record inserted, ID:", mycursor.lastrowid)
+
+
+1 record inserted, ID: 15
+```
+
+> Select all records from a table
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM customers")
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(1, 'John', 'Highway 21')
+(2, 'Peter', 'Lowstreet 27')
+(3, 'Amy', 'Apple st 652')
+(4, 'Hannah', 'Mountain 21')
+(5, 'Michael', 'Valley 345')
+(6, 'Sandy', 'Ocean blvd 2')
+(7, 'Betty', 'Green Grass 1')
+(8, 'Richard', 'Sky st 331')
+(9, 'Susan', 'One way 98')
+(10, 'Vicky', 'Yellow Garden 2')
+(11, 'Ben', 'Park Lane 38')
+(12, 'William', 'Central st 954')
+(13, 'Chuck', 'Main Road 989')
+(14, 'Viola', 'Sideway 1633')
+(15, 'Michelle', 'Blue Village')
+```
+
+> Select only some of the columns in a table
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT name, address FROM customers")
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+('John', 'Highway 21')
+('Peter', 'Lowstreet 27')
+('Amy', 'Apple st 652')
+('Hannah', 'Mountain 21')
+('Michael', 'Valley 345')
+('Sandy', 'Ocean blvd 2')
+('Betty', 'Green Grass 1')
+('Richard', 'Sky st 331')
+('Susan', 'One way 98')
+('Vicky', 'Yellow Garden 2')
+('Ben', 'Park Lane 38')
+('William', 'Central st 954')
+('Chuck', 'Main Road 989')
+('Viola', 'Sideway 1633')
+('Michelle', 'Blue Village')
+```
+
+> Use the fetchone() method to fetch only one row in a table
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM customers")
+
+myresult = mycursor.fetchone()
+
+print(myresult)
+
+
+(1, 'John', 'Highway 21')
+```
+
+> Select with a filter
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers WHERE address = 'Park Lane 38'"
+
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(11, 'Ben', 'Park Lane 38')
+```
+
+> Wildcards characters (通配符)
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers WHERE address Like '%way%'"
+
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(1, 'John', 'Highway 21')
+(9, 'Susan', 'One way 98')
+(14, 'Viola', 'Sideway 1633')
+```
+
+> Prevent SQL injection  (防止SQL注入攻击)
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers WHERE address = %s"
+adr = ("Yellow Garden 2", )
+
+mycursor.execute(sql, adr)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(10, 'Vicky', 'Yellow Garden 2')
+```
+
+> Sort the result of a table alphabetically
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers ORDER BY name"
+
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(3, 'Amy', 'Apple st 652')
+(11, 'Ben', 'Park Lane 38')
+(7, 'Betty', 'Green Grass 1')
+(13, 'Chuck', 'Main Road 989')
+(4, 'Hannah', 'Mountain 21')
+(1, 'John', 'Highway 21')
+(5, 'Michael', 'Valley 345')
+(15, 'Michelle', 'Blue Village') (2, 'Peter', 'Lowstreet 27')
+(8, 'Richard', 'Sky st 331')
+(6, 'Sandy', 'Ocean blvd 2')
+(9, 'Susan', 'One way 98')
+(10, 'Vicky', 'Yellow Garden 2')
+(14, 'Viola', 'Sideway 1633')
+(12, 'William', 'Central st 954')
+```
+
+> Sort the result in a descending order (reverse alphabetically)
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers ORDER BY name DESC"
+
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(12, 'William', 'Central st 954') (14, 'Viola', 'Sideway 1633')
+(10, 'Vicky', 'Yellow Garden 2')
+(9, 'Susan', 'One way 98')
+(6, 'Sandy', 'Ocean blvd 2')
+(8, 'Richard', 'Sky st 331')
+(2, 'Peter', 'Lowstreet 27')
+(15, 'Michelle', 'Blue Village') (5, 'Michael', 'Valley 345')
+(1, 'John', 'Highway 21')
+(4, 'Hannah', 'Mountain 21')
+(13, 'Chuck', 'Main Road 989')
+(7, 'Betty', 'Green Grass 1')
+(11, 'Ben', 'Park Lane 38')
+(3, 'Amy', 'Apple st 652')
+```
+
+> Delete records from an existing table
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DELETE FROM customers WHERE address = 'Mountain 21'"
+
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) deleted")
+
+
+1 record(s) deleted
+```
+
+> Prevent SQL injection
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DELETE FROM customers WHERE address = %s"
+adr = ("Yellow Garden 2", )
+
+mycursor.execute(sql, adr)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) deleted")
+
+
+1 record(s) deleted
+```
+
+> Delete an existing table
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DROP TABLE customers"
+
+mycursor.execute(sql)
+
+#If this page was executed with no error(s), you have successfully deleted the "customers" table.
 
 ```
 
-> 
+> Delete a table if it exist
 ```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DROP TABLE IF EXISTS customers"
+
+mycursor.execute(sql)
+
+#If this page was executed with no error(s), you have successfully deleted the "customers" table.
 
 ```
 
-> 
+> Update existing records in a table 
 ```python
+import mysql.connector
 
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"
+
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) affected")
+
+1 record(s) affected
 ```
 
-> 
+> Prevent SQL injection
 ```python
+import mysql.connector
 
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "UPDATE customers SET address = %s WHERE address = %s"
+val = ("Valley 345", "Canyon 123")
+
+mycursor.execute(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) affected")
+
+
+1 record(s) affected
 ```
 
-> 
+> Limit the number of recodes returned from a query
 ```python
+import mysql.connector
 
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM customers LIMIT 5")
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+(1, 'John', 'Highway 21')
+(2, 'Peter', 'Lowstreet 27')
+(3, 'Amy', 'Apple st 652')
+(4, 'Hannah', 'Mountain 21')
+(5, 'Michael', 'Valley 345')
 ```
 
-> 
+> Combine rows from two or more tables,based on a related column between them
 ```python
+import mysql.connector
 
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT \
+  users.name AS user, \
+  products.name AS favorite \
+  FROM users \
+  INNER JOIN products ON users.fav = products.id"
+
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+('John', 'Chocolate Heaven')
+('Peter', 'Chocolate Heaven')
+('Amy', 'Tasty Lemon')
 ```
 
-> 
+> LEFT JOIN
 ```python
+import mysql.connector
 
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT \
+  users.name AS user, \
+  products.name AS favorite \
+  FROM users \
+  LEFT JOIN products ON users.fav = products.id"
+
+mycursor.execute(sql)
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+('John', 'Chocolate Heaven')
+('Peter', 'Chocolate Heaven')
+('Amy', 'Tasty Lemon')
+('Hannah', None)
+('Michael', None)
 ```
 
-> 
+> RIGHT JOIN
 ```python
+import mysql.connector
 
-```
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
 
-> 
-```python
+mycursor = mydb.cursor()
 
-```
+sql = "SELECT \
+  users.name AS user, \
+  products.name AS favorite \
+  FROM users \
+  RIGHT JOIN products ON users.fav = products.id"
 
-> 
-```python
+mycursor.execute(sql)
 
-```
+myresult = mycursor.fetchall()
 
-> 
-```python
+for x in myresult:
+  print(x)
 
-```
 
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
+('John', 'Chocolate Heaven')
+('Peter', 'Chocolate Heaven')
+('Amy', 'Tasty Lemon')
+(None, 'Vanilla Dreams')
 ```
 
 
 
 ### Python MongoDB
 
-> 
+> Create database
 ```python
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+mydb = myclient['mydatabase']
+
+# database created!
+```
+
+> Check if a database exist
+```python
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+print(myclient.list_database_names())
+
+
+['admin', 'local', 'mydatabase']
+```
+
+> Create a collection
+```python
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+mydb = myclient['mydatabase']
+
+mycol = mydb["customers"]
+
+# collection created!
 
 ```
 
-> 
+> Check if a collection exist
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+mydb = myclient['mydatabase']
+
+mycol = mydb["customers"]
+
+print(mydb.list_collection_names())
+
+
+['customers']
 ```
 
-> 
+> Insert into collection
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+mydb = myclient['mydatabase']
+mycol = mydb["customers"]
+
+mydict = { "name": "John", "address": "Highway 37" }
+
+x = mycol.insert_one(mydict)
+
+print(x)
+
+
+<pymongo.results.InsertOneResult object at 0x03D62918>
 ```
 
-> 
+> Return the id filed
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+mydb = myclient['mydatabase']
+mycol = mydb["customers"]
+
+mydict = { "name": "Peter", "address": "Lowstreet 27" }
+
+x = mycol.insert_one(mydict)
+
+print(x.inserted_id)
+
+
+5b1910482ddb101b7042fcd7
 ```
 
-> 
+> Insert multiple documents
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mylist = [
+  { "name": "Amy", "address": "Apple st 652"},
+  { "name": "Hannah", "address": "Mountain 21"},
+  { "name": "Michael", "address": "Valley 345"},
+  { "name": "Sandy", "address": "Ocean blvd 2"},
+  { "name": "Betty", "address": "Green Grass 1"},
+  { "name": "Richard", "address": "Sky st 331"},
+  { "name": "Susan", "address": "One way 98"},
+  { "name": "Vicky", "address": "Yellow Garden 2"},
+  { "name": "Ben", "address": "Park Lane 38"},
+  { "name": "William", "address": "Central st 954"},
+  { "name": "Chuck", "address": "Main Road 989"},
+  { "name": "Viola", "address": "Sideway 1633"}
+]
+
+x = mycol.insert_many(mylist)
+
+#print list of the _id values of the inserted documents:
+
+print(x.inserted_ids)
+
+
+[ObjectId('5b19112f2ddb101964065487'), ObjectId('5b19112f2ddb101964065488'), ObjectId('5b19112f2ddb101964065489'), ObjectId('5b19112f2ddb10196406548a'), ObjectId('5b19112f2ddb10196406548b'), ObjectId('5b19112f2ddb10196406548c'), ObjectId('5b19112f2ddb10196406548d'), ObjectId('5b19112f2ddb10196406548e'), ObjectId('5b19112f2ddb10196406548f'), ObjectId('5b19112f2ddb101964065490'), ObjectId('5b19112f2ddb101964065491'), 
+ObjectId('5b19112f2ddb101964065492')]
 ```
 
-> 
+> Insert multiple documents with specified IDs
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mylist = [
+  { "_id": 1, "name": "John", "address": "Highway 37"},
+  { "_id": 2, "name": "Peter", "address": "Lowstreet 27"},
+  { "_id": 3, "name": "Amy", "address": "Apple st 652"},
+  { "_id": 4, "name": "Hannah", "address": "Mountain 21"},
+  { "_id": 5, "name": "Michael", "address": "Valley 345"},
+  { "_id": 6, "name": "Sandy", "address": "Ocean blvd 2"},
+  { "_id": 7, "name": "Betty", "address": "Green Grass 1"},
+  { "_id": 8, "name": "Richard", "address": "Sky st 331"},
+  { "_id": 9, "name": "Susan", "address": "One way 98"},
+  { "_id": 10, "name": "Vicky", "address": "Yellow Garden 2"},
+  { "_id": 11, "name": "Ben", "address": "Park Lane 38"},
+  { "_id": 12, "name": "William", "address": "Central st 954"},
+  { "_id": 13, "name": "Chuck", "address": "Main Road 989"},
+  { "_id": 14, "name": "Viola", "address": "Sideway 1633"}
+]
+
+x = mycol.insert_many(mylist)
+
+#print a list of the _id values of the inserted documents:
+print(x.inserted_ids)
+
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 ```
 
-> 
+> Find the first document in the selection
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+x mycol.find_one()
+
+print(x)
+
+
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
 ```
 
-> 
+> Find all documents in the selection
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+for x in mycol.find():
+  print(x)
+
+
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
+{'_id': 4, 'name': 'Hannah', 'address': 'Mountain 21'}
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
+{'_id': 6, 'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'_id': 7, 'name': 'Betty', 'address': 'Green Grass 1'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 9, 'name': 'Susan', 'address': 'One way 98'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
+{'_id': 12, 'name': 'William', 'address': 'Central st 954'}
+{'_id': 13, 'name': 'Chuck', 'address': 'Main Road 989'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
 ```
 
-> 
+> Find only some fields
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+for x in mycol.find({},{ "_id": 0, "name": 1, "address": 1 }):
+  print(x)
+
+
+{'name': 'John', 'address': 'Highway37'}
+{'name': 'Peter', 'address': 'Lowstreet 27'}
+{'name': 'Amy', 'address': 'Apple st 652'}
+{'name': 'Hannah', 'address': 'Mountain 21'}
+{'name': 'Michael', 'address': 'Valley 345'}
+{'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'name': 'Betty', 'address': 'Green Grass 1'}
+{'name': 'Richard', 'address': 'Sky st 331'}
+{'name': 'Susan', 'address': 'One way 98'}
+{'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'name': 'Ben', 'address': 'Park Lane 38'}
+{'name': 'William', 'address': 'Central st 954'}
+{'name': 'Chuck', 'address': 'Main Road 989'}
+{'name': 'Viola', 'address': 'Sideway 1633'}
 ```
 
-> 
+> Filter the result
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myquery = { "address": "Park Lane 38" }
+
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+  print(x)
+
+
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
 ```
 
-> 
+> Advanced query
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+#address greater than S:
+myquery = { "address": {"$gt": "S"} }
+
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+  print(x)
+
+
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
 ```
 
-> 
+> Filter with regular expressions
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+# address starts with S:
+myquery = {'address': {'$regex': '^S'}}
+
+mydoc = mycol.find(myquery)
+
+for x in mydoc:
+	print(x)
+
+​
+{'_id': 10, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
 ```
 
-> 
+> Sort the result alphabetically(字母顺序排序检索结果)
 ```python
+import pymongo
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
 
+mydoc = mycol.find().sort('name')
+
+for x in mydoc:
+	print(x)
+
+
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
+{'_id': 7, 'name': 'Betty', 'address': 'Green Grass 1'}
+{'_id': 13, 'name': 'Chuck', 'address': 'Main Road 989'}
+{'_id': 4, 'name': 'Hannah', 'address': 'Mountain 21'}
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 6, 'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'_id': 9, 'name': 'Susan', 'address': 'One way 98'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
+{'_id': 12, 'name': 'William', 'address': 'Central st 954'}
 ```
 
-> 
+> Sort the result descending(reverse alphabetically)
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+mydoc = mycol.find().sort('name', -1)
+
+for x in mydoc:
+	print(x)
+
+
+{'_id': 12, 'name': 'William', 'address': 'Central st 954'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 9, 'name': 'Susan', 'address': 'One way 98'}
+{'_id': 6, 'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 4, 'name': 'Hannah', 'address': 'Mountain 21'}
+{'_id': 13, 'name': 'Chuck', 'address': 'Main Road 989'}
+{'_id': 7, 'name': 'Betty', 'address': 'Green Grass 1'}
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
 ```
 
-> 
+> Delete document
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+myquery = {'address': 'Mountain 21'}
+
+mycol.delete_one(myquery)
+
+# print the customers collection after the deletion:
+for x in mycol.find():
+	print(x)
+
+
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
+{'_id': 6, 'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'_id': 7, 'name': 'Betty', 'address': 'Green Grass 1'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 9, 'name': 'Susan', 'address': 'One way 98'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
+{'_id': 12, 'name': 'William', 'address': 'Central st 954'}
+{'_id': 13, 'name': 'Chuck', 'address': 'Main Road 989'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
 ```
 
-> 
+> Delete many documents
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+myquery = {'address': {'$regex': '^S'}}
+
+x = mycol.delete_many(myquery)
+
+print(x.deleted_count, 'documents deleted')
+
+
+2 documents deleted.
 ```
 
-> 
+> Delete all documents in a collection
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+x = mycol.delete({})
+
+print(x.deleted_count, 'documents deleted')
+
+
+11 documents deleted.
 ```
 
-> 
+> Delete a collection
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+mycol.drop()
 ```
 
-> 
+> Update a document
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient('mongodb://localhost:27017')
+mydb = myclient['mydatabase']
+mycol = mydb['customers']
+
+myquery = {'address': 'Valley 345'}
+newValues = {'$set': {'address': 'Canyon 123'}}
+
+mycol.update_one(myquery, newValues)
+
+# print 'customers' after the update
+for x in mycol.find():
+	print(x)
+
+
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
+{'_id': 4, 'name': 'Hannah', 'address': 'Mountain 21'}
+{'_id': 5, 'name': 'Michael', 'address': 'Canyon 123'}
+{'_id': 6, 'name': 'Sandy', 'address': 'Ocean blvd 2'}
+{'_id': 7, 'name': 'Betty', 'address': 'Green Grass 1'}
+{'_id': 8, 'name': 'Richard', 'address': 'Sky st 331'}
+{'_id': 9, 'name': 'Susan', 'address': 'One way 98'}
+{'_id': 10, 'name': 'Vicky', 'address': 'Yellow Garden 2'}
+{'_id': 11, 'name': 'Ben', 'address': 'Park Lane 38'}
+{'_id': 12, 'name': 'William', 'address': 'Central st 954'}
+{'_id': 13, 'name': 'Chuck', 'address': 'Main Road 989'}
+{'_id': 14, 'name': 'Viola', 'address': 'Sideway 1633'}
 ```
 
-> 
+> Update many/all document
 ```python
+import pymongo
 
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+myquery = {'address': {'$regex': '^S'}}
+
+newValues = {'$set': {'name': 'Minnie'}}
+
+x = mycol.update_many(myquery, newValues)
+
+print(x.modified_count, 'documents updated.')
+
+
+2 documents updated.
 ```
 
-> 
+> Limit the result
 ```python
+import pymongo
 
-```
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
 
-> 
-```python
+myresult = mycol.find().find().limit(5)
 
-```
+# print the result
+for x in myresult:
+	print(x)
 
-> 
-```python
 
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
-```
-
-> 
-```python
-
+{'_id': 1, 'name': 'John', 'address': 'Highway37'}
+{'_id': 2, 'name': 'Peter', 'address': 'Lowstreet 27'}
+{'_id': 3, 'name': 'Amy', 'address': 'Apple st 652'}
+{'_id': 4, 'name': 'Hannah', 'address': 'Mountain 21'}
+{'_id': 5, 'name': 'Michael', 'address': 'Valley 345'}
 ```
